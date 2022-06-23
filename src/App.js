@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
+  const [text, updateText] = useState("");
+
+  function handleChange(e) {
+    const { value } = e.target;
+
+    updateText(value)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+        <h1>Speed Typing Game</h1>
+        <textarea onChange={handleChange} value={text}/>
+        <h4>Time Remaining: </h4>
+        <button></button>
+        <h1>Word Count:</h1>
     </div>
   );
 }
