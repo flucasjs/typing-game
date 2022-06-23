@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './App.css';
 
 function App() {
@@ -8,6 +8,7 @@ function App() {
   const [timeRemaining, setTimeRemaining] = useState(5);
   const [isTimeRunning, setIsTimeRunning] = useState(false);
   const [wordCount, setWordCount] = useState(0);
+  const textAreaRef = useRef(null);
 
   useEffect(() => {
     setTimeout(() => {
@@ -26,7 +27,6 @@ function App() {
 
   function countWords(text) {
     const wordsArr = text.trim().split(" ");
-    console.log(wordsArr.filter(v => v !== "").length)
     return wordsArr.filter(v => v !== "").length;
   }
 
@@ -35,6 +35,8 @@ function App() {
     setWordCount(0);
     setTimeRemaining(STARTING_TIME);
     setIsTimeRunning(true);
+    textAreaRef.current.disabled = false;
+    textAreaRef.current.focus();
   }
 
   function endGame() {
@@ -45,7 +47,12 @@ function App() {
   return (
     <div>
         <h1>Speed Typing Game</h1>
-        <textarea onChange={handleChange} value={text} disabled={!isTimeRunning}/>
+        <textarea 
+          onChange={handleChange} 
+          value={text} 
+          disabled={!isTimeRunning}
+          ref={textAreaRef}
+        />
         <h4>Time Remaining: {timeRemaining}</h4>
         <button onClick={startGame} disabled={isTimeRunning}>Start</button>
         <h1>Word Count: {wordCount}</h1>
